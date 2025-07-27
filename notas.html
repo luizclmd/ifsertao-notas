@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IF Sertão-PE - Calculadora de Pontos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .logo {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto 20px auto;
+            display: block;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #e74c3c;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input {
+            width: 60px;
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        #resultado {
+            margin-top: 20px;
+            text-align: left;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .erro {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+        .aprovado {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .motivacional {
+            color: #3498db;
+            font-weight: bold;
+            font-style: italic;
+        }
+        .iluminado {
+            color: #ffd700;
+            font-weight: bold;
+            animation: piscar 0.5s infinite alternate;
+            display: inline-block;
+        }
+        .medalha {
+            width: 30px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        @keyframes piscar {
+            from { opacity: 1; }
+            to { opacity: 0.5; text-shadow: 0 0 10px #ffd700; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://www.infoescola.com/wp-content/uploads/2015/11/IF-SERT%C3%83O-PE.jpg" alt="IF Sertão-PE" class="logo">
+        <h1>IF Sertão-PE - EBTT</h1>
+        <h2>Calculadora de Pontos - Concurso Público 02/2025</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Componente</th>
+                    <th>Nº Questões</th>
+                    <th>Pontos por Questão</th>
+                    <th>Seus Acertos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Língua Portuguesa (E/C)*</td>
+                    <td>15</td>
+                    <td>1,00</td>
+                    <td>
+                        <input type="number" id="portugues" min="0" max="15" placeholder="0">
+                        <div id="erro-portugues" class="erro">Máximo: 15 acertos</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Conhecimentos Pedagógicos (E/C)*</td>
+                    <td>15</td>
+                    <td>2,00</td>
+                    <td>
+                        <input type="number" id="pedagogia" min="0" max="15" placeholder="0">
+                        <div id="erro-pedagogia" class="erro">Máximo: 15 acertos</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Legislação (E/C)*</td>
+                    <td>10</td>
+                    <td>1,00</td>
+                    <td>
+                        <input type="number" id="legislacao" min="0" max="10" placeholder="0">
+                        <div id="erro-legislacao" class="erro">Máximo: 10 acertos</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Conhecimentos Específicos (E/C)*</td>
+                    <td>20</td>
+                    <td>2,25</td>
+                    <td>
+                        <input type="number" id="especificos" min="0" max="20" placeholder="0">
+                        <div id="erro-especificos" class="erro">Máximo: 20 acertos</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <button onclick="calcularPontos()">Calcular Pontuação</button>
+        
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function calcularPontos() {
+            // Limpa mensagens de erro anteriores
+            document.querySelectorAll('.erro').forEach(el => {
+                el.style.display = 'none';
+                el.previousElementSibling.style.border = '1px solid #ddd';
+            });
+            
+            // Validações
+            const portugues = validarInput('portugues', 15, 'erro-portugues');
+            const pedagogia = validarInput('pedagogia', 15, 'erro-pedagogia');
+            const legislacao = validarInput('legislacao', 10, 'erro-legislacao');
+            const especificos = validarInput('especificos', 20, 'erro-especificos');
+            
+            if (portugues === null || pedagogia === null || legislacao === null || especificos === null) {
+                return;
+            }
+
+            // Cálculos
+            const pontosPortugues = portugues * 1.00;
+            const pontosPedagogia = pedagogia * 2.00;
+            const pontosLegislacao = legislacao * 1.00;
+            const pontosEspecificos = especificos * 2.25;
+            const totalPontos = pontosPortugues + pontosPedagogia + pontosLegislacao + pontosEspecificos;
+            const aprovado = totalPontos >= 60.00;
+            const notaMaxima = totalPontos === 100.00;
+
+            // Exibe resultado
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.innerHTML = `
+                <h3>Resultado:</h3>
+                <p><strong>Pontuação Total:</strong> ${totalPontos.toFixed(2)} / 100.00</p>
+                <p>Status: <span class="${aprovado ? 'aprovado' : 'motivacional'}">${aprovado ? 'CLASSIFICADO (≥ 60 pontos)' : 'Vamos para os próximos! Não desista! ✊'}</span></p>
+                ${notaMaxima ? '<p class="iluminado">ILUMINADO <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKn2vzXZ_7PdoxE7_5geN5NYT0vEGxrAia8w&s" class="medalha" alt="Medalha"></p>' : ''}
+                <h4>Detalhamento por Componente:</h4>
+                <ul>
+                    <li>Língua Portuguesa: ${portugues} acertos → <strong>${pontosPortugues.toFixed(2)} pontos</strong></li>
+                    <li>Conhecimentos Pedagógicos: ${pedagogia} acertos → <strong>${pontosPedagogia.toFixed(2)} pontos</strong></li>
+                    <li>Legislação: ${legislacao} acertos → <strong>${pontosLegislacao.toFixed(2)} pontos</strong></li>
+                    <li>Conhecimentos Específicos: ${especificos} acertos → <strong>${pontosEspecificos.toFixed(2)} pontos</strong></li>
+                </ul>
+                <p><small>(E/C)* Eliminatório/Classificatório</small></p>
+            `;
+        }
+
+        function validarInput(idInput, maximo, idErro) {
+            const input = document.getElementById(idInput);
+            const valor = parseInt(input.value) || 0;
+            
+            if (valor > maximo) {
+                input.style.border = '1px solid #e74c3c';
+                document.getElementById(idErro).style.display = 'block';
+                return null;
+            }
+            return valor;
+        }
+    </script>
+</body>
+</html>
